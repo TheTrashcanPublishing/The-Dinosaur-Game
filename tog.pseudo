@@ -1,0 +1,98 @@
+void DisplayStartScreen() {
+    DisplayTitleAndBackground;
+    PlayThemeMusic;
+    int XPositionDinosaur = RightEdge;
+    int DinosaurFigure = 1; /* There are 4 dinosaur figures according to what position the Dinosaur’s feet are in */
+    while (FireButtonNotPressed) {
+        while (DinosaurFigure <= 4) {
+            DisplayDinosaur(DinosaurFigure, XPositionDinosaur);
+            DinosaurFigure++;
+            XPositionDinosaur -= 5;
+            if ((FireButtonNotPressed) && (XPositionDinosaur <= LeftEdge)) XPositionDinosaur = RightEdge;    }
+        Dinosaurfigure = 1;    }
+    StopThemeMusic;    
+    return;    }
+
+void GamePlay() {
+    DisplayStoryBackground;
+    While (FireButtonNotPressed)
+        for (int StoryLine = 0; StoryLine <= LastLineOfStory; StoryLine++) DisplayStoryLine(StoryLine);
+    DisplayStandardGameBackground;
+    int Level = 1;
+    int Score = 0;
+    int Lives = 3;
+    int XPositionPlayer = LeftEdge;
+    int XPositionDinosaur = RightEdge;
+    int DinosaurFigure = 1;
+    int PlayerFigure = 2; /* There are 3 player figures according to if the player is standing still (PlayerFigure = 2), 						    moving to the left
+					                   (PlayerFigure = 1), or moving to the right (PlayerFigure = 3). */
+    bool PlayerAlive = TRUE;
+    bool DinosaurAlive = TRUE;
+    DisplayPlayer(XPositionPlayer, PlayerFigure);
+    while ((Level < MaxLevel) && (Lives > 0)) { 
+        while ((DinosaurAlive) && (PlayerAlive)) {
+            if (NoJoystickMovement) || (JoystickUp) || (JoystickDown)) {
+                PlayerAlive = (XPositionPlayer < (XPositionDinosaur - MarginOfError));
+                if (DinosaurFigure <= 4) {
+                    DisplayDinosaur(XPositionDinosaur, DinosaurFigure);
+                    DinosaurFigure++;
+                    XPositionDinosaur -= 5;
+                    if (NoJoystickMovement) Wait(Level);
+                    else if (Level < (MaxLevel – 2)) Wait(Level + 2);
+                    else Wait(MaxLevel);    }
+                else DinosaurFigure = 1;    }
+            else if ((JoystickLeft) || (JoystickDiagUpLeft) || (JoystickDiagDownLeft)) {
+                PlayerAlive = (XPositionPlayer < (XPositionDinosaur - MarginOfError));
+                int InitPlayerPosition = XPlayerPosition;
+                int FinalPlayerPosition = XPlayerPosition – 5;
+                if (FinalPlayerPosition < LeftEdge) FinalPlayerPosition = LeftEdge; 
+                PlayerFigure = 1; /* Facing left */
+                while (XPositionPlayer > FinalPlayerPosition) {
+                    XPositionPlayer--;
+                    DisplayPlayer(PlayerFigure, XPlayPOsition);    }
+            }
+            if ((JoystickRight) || (JoystickDiagUpRight) || (JoystickDiagDownRight)) {
+                PlayerAlive = (XPositionPlayer < (XPositionDinosaur - MarginOfError));
+                int InitPlayerPosition = XPlayerPosition;
+                int FinalPlayerPosition = XPlayerPosition + 5; 
+                PlayerFigure = 3; /* Facing right */
+                while (XPositionPlayer < FinalPlayerPosition) {
+                    XPositionPlayer++;
+                    DisplayPlayer(PlayerFigure, XPlayPOsition);    }
+            }
+            else if (FireButtonPressed) {
+                int YPositionSpear = Ground;
+                int XPositionSpear = XPositionPlayer;
+                bool DinoHit = FALSE;
+                bool SpearFigure = FALSE; /* There are 2 spear figures, one for shooting up at 45 deg angle and one for going
+                                             straight down */
+                for (int YPositionSpear = Ground; YPositionSprear > TopOfScreen; YPositionSpear-- {
+		                XPositionSpear++;
+                    DisplaySpear(SpearFigure, XPositionSpear, YPositionSpear);    }
+                SpearFigure = TRUE; /* Switch to falling spear */
+                For (int YPositionSpear = TopOfScreen; YPositionSpear < Ground; YPositionSpear++)
+                    DisplaySpear(SpearFigure, XPositionSpear, YPositionSpear);
+                DinoAlive = !(Abs(XPositionSpear – XpositionDinosaur) <= 7);    }
+            }
+        if (PlayerAlive) { /* Dinosaur dead */
+            KillDinosaur;
+            Score += 100;
+            Level++;
+            GoNewLevel; }
+        else { /* Player dead */
+            KillPlayer;
+            Lives--; }
+        }
+    if (Level == MaxLevel) ShowEndGameGraphics;
+    return;    }
+
+main() {
+    while(1) {
+        DisplayStartScreen();
+        GamePlay();    }
+    }
+
+
+
+
+    
