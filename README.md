@@ -4,6 +4,7 @@ Recreation and modernization of original 2D 1986 game for Commodore 128 by Ray A
 Structure of branches:
 
 master: final product when ready
+
 docs: documentation and visual art
 
 Code branches are titled thus (O or N)/(Language(s))/(Library(ies))/Engine(s)):
