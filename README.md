@@ -13,4 +13,4 @@ O = TOG (The Original Game/Prototype) N = TNG (The New Game/Intermediate or Fina
 
 Active Code Branch(es):
 
-O/C++/SDL2: Code in C++ for TOG using SDL 2.0.8 (not yet compilable)
+O/C++/SDL2: Code in C++ for TOG using SDL 2.0.8 (first test project Test0.dev sucessfully compiled 3 April 2018)
