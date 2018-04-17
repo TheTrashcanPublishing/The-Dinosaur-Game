@@ -5,7 +5,7 @@ Structure of branches:
 
 master: final product when ready
 
-docs: documentation and visual art
+docs: documentation, visual art, and music files for LilyPond
 
 Code branches are titled thus (O or N)/(Language(s))/(Library(ies))/Engine(s)):
 
