@@ -2,46 +2,37 @@
 
 #include "togi.hpp"
 
-void togi::DrawGameScreen(void) {
+bool togi::DrawGameScreen(gameWindow* window) {
+	bool failure = FALSE;
+	SDL_Renderer* renderer = NULL;
+	renderer = SDL_CreateRenderer (window, -1, 0);
+	failure = (renderer == NULL);
+	if (failure) {
+	    SDL_Log("Could not create renderer: %s\n", SDL_GetError());
+	}
+	else {
+	    SDL_Rect sky;
+	    SDL_Rect ground;
+	    string skycol = "sky";
+	    string groundcol = "ground";
 
-    SDL_Window *window;                    // Declare a pointer
+	    sky.x = 0;
+	    sky.y = 0;
+    	sky.w = 639;
+        sky.h = 479;
+	    SDL_SetRenderDrawColor(renderer, color(skycol));
+	    SDL_RenderFillRect(renderer, &sky);
 
-    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+	    ground.x = 0;
+	    ground.y = 360;
+	    ground.w = 639;
+	    ground.h = 119;
+	    SDL_SetRenderDrawColor(renderer, color(groundcol));
+	    SDL_RenderFillRect(renderer, &ground);
 
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-        "An SDL2 window",                  // window title
-       SDL_WINDOWPOS_UNDEFINED,           // initial x position
-       SDL_WINDOWPOS_UNDEFINED,           // initial y position
-       640,                               // width, in pixels
-       480,                               // height, in pixels
-       SDL_WINDOW_OPENGL                  // flags
-    );
+		SDL_RenderPresent (renderer);  }
 
-    // Check that the window was successfully created
-    if (window == NULL) {
-        // In the case that the window could not be made...
-        printf("Could not create window: %s\n", SDL_GetError());
-        return 1;
-    }
+	return failure;}
 
-    // The window is open: could enter program loop here (see SDL_PollEvent())
-    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-    SDL_Rect rectangle;
 
-    rectangle.x = 0;
-    rectangle.y = 0;
-    rectangle.w = 640;
-    rectangle.h = 480;
-    SDL_RenderFillRect(renderer, &rectangle);
-
-    SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
-
-    // Close and destroy the window
-    SDL_DestroyWindow(window);
-
-    // Clean up
-    SDL_Quit();
-    return 0;  }
-
-void togi::DrawTitleInfo(void) {}
+void togi::DrawTitleInfo(gameWindow* window) {}

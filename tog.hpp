@@ -3,13 +3,23 @@
 #ifndef _TOG_INCL_
 #define _TOG_INCL_
 
-class TOG {
+class tog {
 
 public:
+	
+	UInt32 color(string colorName);
+	
+	void SecWait(int seconds);
+	
+	void MillisecWait(int millisecs);
+	
+	void wait(int Level);
+	
+	Uint16 GetInput(SDL_Window* window);
 
-    void DisplayStartScreen();
+    bool DisplayStartScreen(gameWindow* window);
 
-    void GamePlay();
+    void GamePlay(gameWindow* window);
 
 };
 

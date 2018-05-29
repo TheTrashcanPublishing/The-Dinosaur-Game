@@ -7,9 +7,9 @@ class togi {
 
 public:
 
-    void DrawGameScreen(void);
+    void DrawGameScreen(gameWindow* window);
 
-    void DrawTitleInfo(void);
+    void DrawTitleInfo(gameWindow* window);
 
 };
 
