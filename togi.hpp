@@ -3,14 +3,9 @@
 #ifndef _TOGI_INCL_
 #define _TOGI_INCL_
 
-class togi {
+SDL_Renderer* DrawGameScreen(gameWindow* dow, bool &fail);
 
-public:
+void PlaceTitleInfo(gameWindow* window);
 
-    void DrawGameScreen(gameWindow* window);
-
-    void DrawTitleInfo(gameWindow* window);
-
-};
 
 #endif // _TOGI_INCL_

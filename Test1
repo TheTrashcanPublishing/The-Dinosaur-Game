@@ -1,11 +1,11 @@
 [Project]
-FileName=Test0.dev
-Name=Test Title
+FileName=Test1
+Name=Test0
 Type=0
 Ver=2
 ObjFiles=
-Includes="C:\Users\Ray\Desktop\laManoMalvadita\The Dinosaur Game\tog (c++)\SDL2-2.0.8-mgw\x86_64-w64-mingw32\include"
-Libs="C:\Users\Ray\Desktop\laManoMalvadita\The Dinosaur Game\tog (c++)\SDL2-2.0.8-mgw\x86_64-w64-mingw32\lib"
+Includes=
+Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
@@ -18,8 +18,8 @@ ExeOutput=
 ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
-OverrideOutput=1
-OverrideOutputName=title.exe
+OverrideOutput=0
+OverrideOutputName=Test0.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
@@ -71,7 +71,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit1]
-FileName=title.cpp
+FileName=main1.cpp
 CompileCpp=1
 Folder=
 Compile=1

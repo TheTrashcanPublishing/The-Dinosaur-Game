@@ -4,6 +4,13 @@
 #include "SDL2/SDL.h"
 #include <cmath>
 
+#define TITLECENTX 320
+#define TITLECENTY 149
+#define TITLEWIDTH 400
+#define TITLEHEIGHT 258
+#define WINWIDTH 640
+#define WINHEIGHT 480
+
 // #include "tog.hpp"
 using namespace std;
 
@@ -19,8 +26,8 @@ int main(int argc, char *argv[]) {
             "Pretend This is The Dinosaur Game!",  // window title
             SDL_WINDOWPOS_UNDEFINED,           // initial x position
             SDL_WINDOWPOS_UNDEFINED,           // initial y position
-            640,                               // width, in pixels
-            480,                               // height, in pixels
+            WINWIDTH,                          // width, in pixels
+            WINHEIGHT,                         // height, in pixels
             0                                  // flags
         );
 
@@ -44,28 +51,51 @@ int main(int argc, char *argv[]) {
 	        	return 1;
 			}
 			else {
+				SDL_Rect border;
 	            SDL_Rect sky;
 	            SDL_Rect ground;
+
+				border.x = 0;
+				border.y = 0;
+				border.w = WINWIDTH;
+				border.h = WINHEIGHT;
+				SDL_SetRenderDrawColor(renderer, 0x7F, 0x7f, 0x7f, 0x80);
+				SDL_RenderFillRect(renderer, &border);
             
-	            sky.x = 0;
-	            sky.y = 0;
-    	        sky.w = 639;
-        	    sky.h = 479;
+	            sky.x = 50;
+	            sky.y = 20;
+    	        sky.w = 540;
+        	    sky.h = 430;
 	            SDL_SetRenderDrawColor(renderer, 0xDF, 0xEF, 0x00, 0x80);
 	            SDL_RenderFillRect(renderer, &sky);
 
-	            ground.x = 0;
-	            ground.y = 360;
-	            ground.w = 639;
-	            ground.h = 119;
-	            SDL_SetRenderDrawColor(renderer, 0x9F, 0x7F, 0x00, 0x80);
+	            ground.x = 50;
+	            ground.y = 355;
+	            ground.w = 540;
+	            ground.h = 105;
+	            SDL_SetRenderDrawColor(renderer, 0x9F, 0x7F, 0x00, 0x00);
 	            SDL_RenderFillRect(renderer, &ground);
+	            
+	            SDL_Surface* surface = NULL;
+	            SDL_Texture* texture = NULL;
+	            SDL_Rect placetitle;
+				placetitle.x = (int)(round((double) TITLECENTX - ((double) TITLEWIDTH/2.0)));
+				placetitle.y = (int)(round((double) TITLECENTY - ((double) TITLEHEIGHT/2.0)));
+				placetitle.w = TITLEWIDTH;
+				placetitle.h = TITLEHEIGHT;
+	            surface = SDL_LoadBMP("dinotitle1.bmp");
+	            texture = SDL_CreateTextureFromSurface(renderer, surface);
+	            int error = SDL_RenderCopy(renderer, texture, NULL, &placetitle);
+	            if (error) SDL_Log ("Could not copy renderer. %s", SDL_GetError());
+	            SDL_DestroyTexture(texture);
+	            SDL_FreeSurface(surface);
+	            
+				SDL_RenderPresent(renderer);  }
 
-				SDL_RenderPresent (renderer);  }
+	        SDL_Delay(10000);  // Pause execution for 10000 milliseconds, for example
 
-	        SDL_Delay(6000);  // Pause execution for 6000 milliseconds, for example
-
-	        // Close and destroy the window
+	        // Close and destroy the renderer and window
+	        SDL_DestroyRenderer(renderer);
 	        SDL_DestroyWindow(window); }
 
 	    // Clean up

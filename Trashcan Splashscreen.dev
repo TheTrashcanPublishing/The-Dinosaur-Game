@@ -1,10 +1,10 @@
 [Project]
-FileName=Test0.dev
-Name=Test Title
+FileName=Trashcan Splashscreen.dev
+Name=Trashcan Splashscreen
 Type=0
 Ver=2
 ObjFiles=
-Includes="C:\Users\Ray\Desktop\laManoMalvadita\The Dinosaur Game\tog (c++)\SDL2-2.0.8-mgw\x86_64-w64-mingw32\include"
+Includes="C:\Users\Ray\Desktop\laManoMalvadita\The Dinosaur Game\tog (c++)\SDL2-2.0.8-mgw\i686-w64-mingw32\include"
 Libs="C:\Users\Ray\Desktop\laManoMalvadita\The Dinosaur Game\tog (c++)\SDL2-2.0.8-mgw\x86_64-w64-mingw32\lib"
 PrivateResource=
 ResourceIncludes=
@@ -19,7 +19,7 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=1
-OverrideOutputName=title.exe
+OverrideOutputName=splash.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=1000000000000000000000000
-UnitCount=1
+UnitCount=3
 
 [VersionInfo]
 Major=1
@@ -50,8 +50,18 @@ ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
+[Unit1]
+FileName=mainspl.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit2]
-FileName=main0.cpp
+FileName=splash.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -61,17 +71,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=main0.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit1]
-FileName=title.cpp
+FileName=splash.hpp
 CompileCpp=1
 Folder=
 Compile=1

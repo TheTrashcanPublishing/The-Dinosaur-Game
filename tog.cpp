@@ -5,8 +5,11 @@
 #define MAX_LEVEL 30
 #define MARGIN_OF_ERROR 3
 
+#define SPLASHWIDTH  400
+#define SPLASHHEIGHT 400
+
 // Set a UInt32 color for renderer from String colorName
-UInt32 tog::color(string colorName) {
+UInt32 color(string colorName) {
 	UInt32 col = 0x00000000;
 	switch (colorName) {
 		case "black":     col = 0x00000000; break;
@@ -24,57 +27,119 @@ UInt32 tog::color(string colorName) {
 }
  
 // Wait a set time in seconds
-void tog::SecWait(int seconds) {
+void SecWait(int seconds) {
 	Uint32 milliseconds = (Uint32) (seconds * 1000);
 	SDL_Delay(milliseconds);
 	return;
 }
 
 // Wait a set time in milliseconds
-void tog::MillisecWait(int millisecs) {
+void MillisecWait(int millisecs) {
 	Uint32 milliseconds = (Uint32) (millisecs);
 	SDL_Delay(milliseconds);
 	return;
 }
 
-void tog::wait(int Level) {
+void wait(int Level) {
 	int t = 410 - (10 * Level);
 	MillisecWait(t);
 	return; }
 
-Uint16 tog::GetInput(SDL_Window* window) {
+Uint16 GetInput(SDL_Window* window) {
 	window.getEvents();
 		
 }
 
-bool tog::DisplayStartScreen(gameWindow window) {
-	bool failure = FALSE;
-    failure = DrawGameScreen(window);
-    if (failure) return failure;
+bool ShowSplashScreen(void) {
+	bool failure =  false;
+	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+	        
+        SDL_Window*        window = NULL;	// Declare a Window pointer
+        SDL_Surface* trashcansurf = NULL;	// Declear a Surface pointer
+        SDL_Renderer*    renderer = NULL;	// Declear a Renderer pointer
+
+        // Create a borderless window window with the following settings:
+        window = SDL_CreateWindow(
+            "The Trashcan Presents",		  // window title
+            SDL_WINDOWPOS_UNDEFINED,          // initial x position
+            SDL_WINDOWPOS_UNDEFINED,          // initial y position
+            SPLASHWIDTH,                      // width, in pixels
+            SPLASHHEIGHT,                     // height, in pixels
+            SDL_WINDOW_BORDERLESS             // flags
+        );
+
+        // Check that the window was successfully created
+        if (window == NULL) {
+            // In the case that the window could not be made...
+            SDL_Log("Could not create window: %s\n", SDL_GetError());
+            failure = true; }
+		else {
+			// Create Renderer and Load Surface
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+			trashcansurf = SDL_LoadBMP("TrashcanSplashSm.bmp");
+			
+			// If surface doesn't load, log error
+			if (trashcansurf == NULL) {
+				SDL_Log("Could not load splash screen: %s\n", SDL_GetError);
+				failure = true; }
+
+	        else {
+	        	// Create Texture from Surface, free surface
+	        	// copy render from texture, and present render
+	        	SDL_Texture* spltexture = NULL;
+	        	spltexture = SDL_CreateTextureFromSurface(renderer, trashcansurf);
+	        	SDL_FreeSurface(trashcansurf);
+	        	SDL_RenderClear(renderer);
+	        	SDL_RenderCopy(renderer, spltexture, NULL, NULL);
+	        	SDL_RenderPresent(renderer);
+				SecWait(10);	// Pause execution for 10 seconds
+
+	        	// Destroy the texture, renderer, and window
+	    	    SDL_DestroyTexture(spltexture);
+	    	    SDL_DestroyRenderer(renderer);
+	    	    SDL_DestroyWindow(window); } }
+
+	    // Clean up
+	    SDL_Quit();
+	    failure = false;}
+        
+	else {
+	    SDL_Log("Could NOT initialize SDL: %s\n", SDL_GetError());
+		failure = true; }
+	return failure; }
+
+gameWindow DisplayStartScreen(bool &fail) {
+	fail = false;
+	gamewindow* gdow = NULL;
+	SDL_Renderer* rend = NULL;
+	rend = DrawGameScreen(gdow, &fail);
+	if (fail) //...
+	else fail = PlaceTitleInfo(gdow);
+    if (fail) //...
     else {
-		failure = DrawTitleInfo(window);
-		if (failure) return failure;
 		else {
 			//    PlayThemeMusic;   SDL_Audio_Function here;
 		    bool FireButtonNotPressed;
-		    int XPositionDinosaur = RightEdge;
-		    int DinosaurFigure = 1;  // There are 4 dinosaur figures according to what position
-			                         // the Dinosaur's feet are in
+		    int dinocurf = 0; 	// There are 4 dinosaur figures according to what position
+			                	// the Dinosaur's feet are in
+			Cartesian dinopos(GROUND, RIGHT_EDGE);
+			string dinofile[4] = {"dino0.bmp", "dino1.bmp", "dino2.bmp", "dino3.bmp"};
+			movingFigure* dinosaur = new movingFigure(4, dinopos, dinocurf, dinofile);
 		    while (FireButtonNotPressed) {
-		        while (DinosaurFigure <= 4) {
-		            failure = DisplayDinosaur(DinosaurFigure, XPositionDinosaur); // <<==
-		            DinosaurFigure++;
-		            XPositionDinosaur -= 5;
-		            if ((FireButtonNotPressed) && (XPositionDinosaur <= LeftEdge))
-						XPositionDinosaur = RightEdge;
+		        while (dinocurf <= 4) {
+		            failure = DisplayDinosaur(dinocurf, dinosaur.X()); // <<==
+		            dinocurf++;
+		            dinosaur.X(x - 5); // <<==
+		            if ((FireButtonNotPressed) && (dinosaur.X() <= LEFT_EDGE))
+						dinosaur.X(RIGHT_EDGE);
 					}
-			        Dinosaurfigure = 1;   }
+			        dinocurf = 1;   }
 			//    StopThemeMusic;
 		    return failure;    }
 	}
 }
 
-bool tog::GamePlay(gameWindow* window) {
+bool GamePlay(gameWindow* window) {
 	bool failure = FALSE;
 	failure = DisplayStoryBackground(window);
 	if (failure) return failure;

@@ -11,7 +11,7 @@ ResourceIncludes=
 MakeIncludes=
 Compiler=
 CppCompiler=
-Linker=-lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglu32_@@_
+Linker=-lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglu32 `sdl-config --libs` -lSDL_image_@@_
 IsCpp=1
 Icon=
 ExeOutput=
@@ -29,7 +29,7 @@ IncludeVersionInfo=1
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=1000000000000000000000000
-UnitCount=8
+UnitCount=12
 
 [VersionInfo]
 Major=0
@@ -122,6 +122,46 @@ BuildCmd=
 
 [Unit5]
 FileName=togi.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit9]
+FileName=movingFigure.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=movingFigure.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=RasterText.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=RasterText.cpp
 CompileCpp=1
 Folder=
 Compile=1
